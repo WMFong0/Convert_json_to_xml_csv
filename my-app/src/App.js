@@ -9,6 +9,8 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <input onChange={do_this_when_text_changes}/>
+        <button onClick={e=>{alert('Converting. Give us a minute will ya.')}}>Submit</button>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -20,6 +22,10 @@ function App() {
       </header>
     </div>
   );
+}
+function do_this_when_text_changes(){
+  // Update xml
+  // Update csv
 }
 
 export default App;

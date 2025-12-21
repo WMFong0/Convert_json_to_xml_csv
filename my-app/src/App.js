@@ -2,26 +2,45 @@ import logo from './logo.svg';
 import './App.css';
 import { fax } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
+
+function handleSubmit(e) {
+  // Prevent the browser from reloading the page
+  e.preventDefault();
+
+  // Read the form data
+  const form = e.target;
+  const formData = new FormData(form);
+
+  // You can pass formData as a fetch body directly:
+  fetch('/some-api', { method: form.method, body: formData });
+
+  // Or you can work with it as a plain object:
+  const formJson = Object.fromEntries(formData.entries());
+  console.log(formJson);
+  
+  // Update xml
+  setxmlText(text)
+  // Update csv
+  setcsvText(text)
+}
+
 function App() {
-  const [text, setText, xmltext, setxmlText, csvtext, setcsvText] = useState("")
+  const [xmltext, setxmlText, csvtext, setcsvText] = useState("")
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
 
         <div className='input'>
+        <form method="post" onSubmit={handleSubmit}>
           <label>
             Place your text here:
-            <textarea value={text} rows={4} cols={40} onChange={do_this_when_text_changes}/>
+            <textarea name="json-text" defaultValue="" rows={4} cols={40}/>
           </label>
-          <button type="reset" onClick={()=>{setText('')}}><FontAwesomeIcon icon={fax} />Reset Text</button>
-          <button type="submit" onClick={()=>{
-            {text ? (
-              alert("Converting....")
-            ) : (
-              alert("Empty text box")
-            )}
-          }}>Submit</button>
+          <hr />
+          <button type="reset"><FontAwesomeIcon icon={fax} />Reset Text</button>
+          <button type="submit">Convert</button>
+        </form>
         </div>
         <div className='xml'>
           <p>Your xml text:</p>
@@ -34,12 +53,6 @@ function App() {
       </header>
     </div>
   );
-}
-function do_this_when_text_changes(){
-  // Update xml
-  setxmlText(text)
-  // Update csv
-  setcsvText(text)
 }
 
 export default App;

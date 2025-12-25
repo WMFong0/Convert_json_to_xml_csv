@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { fax } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
+import DynamicTable from './DynamicTable';
 
 function handleSubmit(e) {
   // Prevent the browser from reloading the page
@@ -12,20 +13,18 @@ function handleSubmit(e) {
   const formData = new FormData(form);
 
   // You can pass formData as a fetch body directly:
-  fetch('/some-api', { method: form.method, body: formData });
+  //fetch('/some-api', { method: form.method, body: formData });
 
   // Or you can work with it as a plain object:
   const formJson = Object.fromEntries(formData.entries());
   console.log(formJson);
   
   // Update xml
-  setxmlText(text)
-  // Update csv
-  setcsvText(text)
+  setText(formJson)
 }
 
 function App() {
-  const [xmltext, setxmlText, csvtext, setcsvText] = useState("")
+  const [text, setText] = useState("")
   return (
     <div className="App">
       <header className="App-header">
@@ -43,12 +42,8 @@ function App() {
         </form>
         </div>
         <div className='xml'>
-          <p>Your xml text:</p>
-          <p id = "xml-text">{xmltext}</p> 
-        </div>
-        <div className='csv'>
-          <p>Your csv text:</p>
-          <p id = "csv-text">{csvtext}</p> 
+          <p>Your json data:</p>
+          <DynamicTable data={text} />
         </div>
       </header>
     </div>
